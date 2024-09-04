@@ -1,3 +1,4 @@
+console.log(`js file works`);
 // Search for music
 async function searchFromMusicPlatform(platform) {
   const linkOrTerm = document.getElementById("searchTerm").value;
