@@ -76,18 +76,6 @@ function extractVideoId(url) {
   return match ? match[1] : url;
 }
 
-async function searchTrack(trackName) {
-  try {
-    const response = await fetch(
-      `/api/spotify?trackName=${encodeURIComponent(trackName)}`,
-    );
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error("Error fetching track:", error);
-  }
-}
-
 // Update YouTube Music search URL and open it
 async function searchAndOpenYouTubeMusicTrack(searchTerm) {
   try {
