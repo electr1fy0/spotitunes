@@ -11,14 +11,14 @@ async function searchFromMusicPlatform(platform) {
     if (trackInfo) {
       const searchTerm = trackInfo.name;
       console.log(`Song name: ${searchTerm}`);
-      // ytm part
+      search(platform, searchTerm); // Call the search function for Spotify
     }
   } else if (linkOrTerm.includes("music.youtube.com")) {
     trackInfo = await getYouTubeMusicTrackInfo(linkOrTerm);
     if (trackInfo) {
       const searchTerm = trackInfo.name;
       console.log(`Song name: ${searchTerm}`);
-      search(platform, searchTerm);
+      search(platform, searchTerm); // Call the search function for YouTube Music
     }
   } else {
     search(platform, linkOrTerm); // Use the search term directly
