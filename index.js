@@ -59,8 +59,8 @@ function extractVideoId(url) {
   return match ? match[1] : url;
 }
 
-// testing ytm url fetch
-async function searchAndOpenYouTubeMusicTrack(linkOrTerm) {
+// Update YouTube Music search URL
+async function searchAndUpdateYouTubeMusicTrack(linkOrTerm) {
   try {
     const response = await fetch(
       `/api/searchYouTube?q=${encodeURIComponent(linkOrTerm)}`,
@@ -73,7 +73,9 @@ async function searchAndOpenYouTubeMusicTrack(linkOrTerm) {
     const firstResultUrl = data.url;
 
     if (firstResultUrl) {
-      window.open(firstResultUrl, "_blank");
+      // Update a specific element with the new URL, for example:
+      document.getElementById("youtubeMusicLink").href = firstResultUrl;
+      console.log(`YouTube Music URL updated: ${firstResultUrl}`);
     } else {
       console.log("No results found.");
     }
@@ -83,8 +85,6 @@ async function searchAndOpenYouTubeMusicTrack(linkOrTerm) {
 }
 
 // Example usage
-const searchTerm = document.getElementById("searchTerm").value;
-searchAndOpenYouTubeMusicTrack(searchTerm);
 
 // Perform the search
 function search(platform, searchTerm) {
@@ -94,6 +94,8 @@ function search(platform, searchTerm) {
   } else if (platform === "apple music") {
     url =
       "https://music.apple.com/search?term=" + encodeURIComponent(searchTerm);
+  } else if (platform === "ytm") {
+    url = url;
   }
   window.open(url, "_blank");
 }
