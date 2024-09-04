@@ -1,5 +1,4 @@
 console.log(`js file works`);
-
 // Search for music
 async function searchFromMusicPlatform(platform) {
   const linkOrTerm = document.getElementById("searchTerm").value;
@@ -16,12 +15,7 @@ async function searchFromMusicPlatform(platform) {
 
   const searchTerm = trackInfo.name;
   console.log(`Song name: ${searchTerm}`);
-
-  if (platform === "ytm") {
-    openYouTubeMusicTrack(searchTerm);
-  } else {
-    search(platform, searchTerm);
-  }
+  search(platform, searchTerm);
 }
 
 // Spotify info fetch
@@ -31,28 +25,9 @@ async function getSpotifyTrackInfo(url) {
   );
   const data = await response.json();
   const parts = data.title.split(" by ");
-  return { name: parts[0] };
-}
-
-// YouTube Music search and open URL
-async function openYouTubeMusicTrack(trackName) {
-  const apiKey = "YOUR_API_KEY"; // Replace with your YouTube Data API v3 key
-  const searchTerm = encodeURIComponent(trackName);
-  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerm}&type=video&key=${apiKey}`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.items.length > 0) {
-      const videoId = data.items[0].id.videoId;
-      const videoUrl = `https://music.youtube.com/watch?v=${videoId}`;
-      window.open(videoUrl, "_blank");
-    } else {
-      console.error("No results found");
-    }
-  } catch (error) {
-    console.error("Error fetching YouTube Music data:", error);
-  }
+  return {
+    name: parts[0],
+  };
 }
 
 // YouTube Music info fetch
@@ -63,7 +38,9 @@ async function getYouTubeMusicTrackInfo(url) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
     const data = await response.json();
+
     if (data.name) {
       return { name: data.name };
     } else {
@@ -91,14 +68,8 @@ function search(platform, searchTerm) {
     url =
       "https://music.apple.com/search?term=" + encodeURIComponent(searchTerm);
   } else if (platform === "ytm") {
-    // URL construction is now handled in openYouTubeMusicTrack
+    url =
+      "https://music.youtube.com/search?q=" + encodeURIComponent(searchTerm);
   }
-  if (url) {
-    window.open(url, "_blank");
-  }
+  window.open(url, "_blank");
 }
-
-// Event listener for YouTube Music button
-document.getElementById("ytm").addEventListener("click", function () {
-  searchFromMusicPlatform("ytm");
-});
