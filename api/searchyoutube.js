@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     if (data.items && data.items.length > 0) {
       const videoId = data.items[0].id.videoId;
-      const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+      const videoUrl = `https://www.music.youtube.com/watch?v=${videoId}`;
       res
         .status(200)
         .json({ url: videoUrl, name: data.items[0].snippet.title });
