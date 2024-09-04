@@ -1,4 +1,4 @@
-console.log(`js file works`);
+console.log(`index.js is ok.`);
 
 // Search for music
 async function searchFromMusicPlatform(platform) {
@@ -11,7 +11,7 @@ async function searchFromMusicPlatform(platform) {
     if (trackInfo) {
       const searchTerm = trackInfo.name;
       console.log(`Song name: ${searchTerm}`);
-      await searchAndOpenYouTubeMusicTrack(searchTerm); // Use the track name to search on YouTube Music
+      // ytm part
     }
   } else if (linkOrTerm.includes("music.youtube.com")) {
     trackInfo = await getYouTubeMusicTrackInfo(linkOrTerm);
@@ -91,17 +91,19 @@ async function searchAndOpenYouTubeMusicTrack(searchTerm) {
 }
 
 // Perform the search
-function search(platform, searchTerm) {
+async function search(platform, searchTerm) {
   let url = "";
+
   if (platform === "spotify") {
     url = "https://open.spotify.com/search/" + encodeURIComponent(searchTerm);
   } else if (platform === "apple music") {
     url =
       "https://music.apple.com/search?term=" + encodeURIComponent(searchTerm);
   } else if (platform === "ytm") {
-    url =
-      "https://music.youtube.com/search?q=" + encodeURIComponent(searchTerm);
+    await searchAndOpenYouTubeMusicTrack(searchTerm); // Search and open YouTube Music
+    return; // Exit the function since searchAndOpenYouTubeMusicTrack handles opening the URL
   }
+
   if (url) {
     window.open(url, "_blank");
   }
