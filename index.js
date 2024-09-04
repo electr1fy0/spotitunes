@@ -59,6 +59,33 @@ function extractVideoId(url) {
   return match ? match[1] : url;
 }
 
+// testing ytm url fetch
+async function searchAndOpenYouTubeMusicTrack(linkOrTerm) {
+  try {
+    const response = await fetch(
+      `/api/searchYouTube?q=${encodeURIComponent(linkOrTerm)}`,
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const firstResultUrl = data.url;
+
+    if (firstResultUrl) {
+      window.open(firstResultUrl, "_blank");
+    } else {
+      console.log("No results found.");
+    }
+  } catch (error) {
+    console.error("Error fetching YouTube Music search results:", error);
+  }
+}
+
+// Example usage
+const searchTerm = document.getElementById("searchTerm").value;
+searchAndOpenYouTubeMusicTrack(searchTerm);
+
 // Perform the search
 function search(platform, searchTerm) {
   let url = "";
@@ -67,9 +94,6 @@ function search(platform, searchTerm) {
   } else if (platform === "apple music") {
     url =
       "https://music.apple.com/search?term=" + encodeURIComponent(searchTerm);
-  } else if (platform === "ytm") {
-    url =
-      "https://music.youtube.com/search?q=" + encodeURIComponent(searchTerm);
   }
   window.open(url, "_blank");
 }
