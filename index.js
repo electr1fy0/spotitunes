@@ -4,6 +4,16 @@ console.log(`index.js is ok.`);
 async function searchFromMusicPlatform(platform) {
   const linkOrTerm = document.getElementById("searchTerm").value;
 
+  if (linkOrTerm.includes("open.spotify.com") && platform === "spotify") {
+    window.open(linkOrTerm, "_blank");
+    return;
+  }
+
+  if (linkOrTerm.includes("music.youtube.com") && platform === "ytm") {
+    window.open(linkOrTerm, "_blank");
+    return;
+  }
+
   let trackInfo = null;
 
   if (linkOrTerm.includes("open.spotify.com")) {
