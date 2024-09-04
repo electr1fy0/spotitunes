@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/archive_circle.png">
+
+    <title>SpotiTunes</title>
+    <link rel="stylesheet" href="output.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@100..900&family=Square+Peg&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class=" font-satoshi relative  h-full w-full bg-[#F2F1E9]  ">
+<div class="fixed inset-0 -z-10 h-full w-full  bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+    <!--header-->
+    <header
+        class="flex z-0 justify-between items-center sm:mx-8 mx-2 my-6 bg-gradient-to-t from-[#EEEADF] to-[#EAE8DD] bg-opacity-90 border border-[#e2ded3] px-4 py-3 rounded-xl">
+
+        <div>
+            <h1 class="font-satoshi sm:text-2xl text-xl flex justify-center text-neutral-950 font-medium ">♫ SpotiTunes
+            </h1>
+        </div>
+        <div class="flex ">
+            <a href="https://github.com/electr1fy0/spotitunes">
+                <button
+                    class="rounded-md px-3 py-1 text-lg  bg-[#2A234A]  hover:bg-white hover:border border-[#e2ded3] box-border hover:text-black duration-200 text-white">GitHub</button>
+            </a>
+
+        </div>
+    </header>
+
+
+
+    <!--hero-->
+    <div
+        class="my-20 animate-slide-in  sm:mt-32  sm:space-y-8 space-y-4 font-instrument sm:text-[5rem] text-5xl flex justify-center mt-32 mb-14 font-light text-neutral-900 text-center">
+        <style>
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-240px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .animate-slide-in {
+                animation: slideIn 0.7s ease-out;
+            }
+        </style>
+        <h2 class="select-none space-y-1 tracking-tight sm:tracking-normal text-center">
+            Search music on&nbsp;<span class="italic">any<br></span>
+            <div class="flex items-center justify-center">
+                <div>streaming </div><img class="sm:w-16 w-12 mx-2 sm:mx-3 sm:rounded-2xl rounded-xl"
+                    src="images/icon.jpg" alt="music icons"><span class="sm:hidden flex">app</span><span
+                    class="hidden sm:flex">platform</span>
+            </div>
+        </h2>
+    </div>
+
+    <!--form-->
+    <div class="flex justify-center animate-slide-in-2 ">
+        <style>
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-30px);
+                    opacity: 25%;
+                }
+
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .animate-slide-in-2 {
+                animation: slideIn 0.7s ease-out 0.1s;
+            }
+        </style>
+
+
+        <form class="text-lg">
+            <input
+                class="rounded-xl px-3 py-2 flex border-[0.5px] shadow-sm  h-12 w-full border-[#c0bdb4] justify-center sm:mb-10 mb-8"
+                type="text" id="searchTerm" placeholder="Enter track name or Spotify link" required />
+
+            <!--buttons -->
+            <div class="sm:space-x-6 space-x-2 flex justify-between">
+                <button
+                    class="bg-[#2A234A] hover:scale-105 hover:bg-green-600 duration-200 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
+                    type="button" onclick="searchFromMusicPlatform('spotify')">Spotify</button>
+                <button
+                    class="bg-[#2A234A] hover:scale-105 duration-200 hover:bg-pink-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
+                    type="button" onclick="searchFromMusicPlatform('apple music')">Apple Music</button>
+                <button
+                    class="bg-[#2A234A] hover:scale-105 duration-200 hover:bg-red-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
+                    type="button" onclick="searchFromMusicPlatform('ytm')">Youtube Music</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="h-40 overflow-clip mt-20 fixed bottom-0 left-0 right-0 opacity-90 ">
+
+    </div>
+    <!-- currently listening-->
+    <div class=" my-20  text-lg">
+        <div class=" sm:text-5xl text-[2.5rem] font-inter mb-8 lg:w-1/2 md:w-4/5 sm:w-4/5 w-4/5 mx-auto tracking-tight font-medium text-center">Discover</div>
+
+        <div
+            class="rounded-lg bg-gradient-to-t  pt-6 p-4 lg:w-3/5 md:w-4/5 sm:w-full w-4/5   mx-auto text-xl ">
+            <div class="flex flex-col sm:flex-row  justify-center gap-10  items-center ">
+                <div class=""><img src="images/songs/magic.jpeg" alt="magic" class="rounded-xl lg:h-56 md:h-48 sm:h-44 h-64 mb-3 rotate-3 hover:rotate-0 duration-300">
+                    <div class="flex justify-center">Magic by Prabh </div>
+                </div>
+                <div class=""><img src="images/songs/fotia.jpeg" alt="fotia" class="rounded-xl lg:h-56 md:h-48 sm:h-44 h-64 mb-3 rotate-3 hover:rotate-0 duration-300">
+                    <div class="flex justify-center">Fotiá by Evangelia</div>
+                </div>
+                <div class=""><img src="images/songs/fearless.jpeg" alt="fearless" class="rounded-xl lg:h-56 md:h-48 sm:h-44 h-64 mb-3 rotate-3 hover:rotate-0 duration-300">
+                    <div class="flex justify-center">Fearless by Tom.</div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <!--
+    <div class=" w-full z-0  mt-20">
+        <div
+            class=" rounded-xl sm:pt-8 py-6 border border-[#e2ded3] mx-auto bg-[#ECEADF] md:w-2/5 sm:w-3/5 w-11/12   sm:h-24 h-20">
+            <div class="sm:text-2xl text-xl flex justify-center font-inter ">
+                Made with 🫶 by Team Zephyr</div>
+        </div>
+    </div>
+-->
+        <script src="index.js"></script>
+</body>
+
+</html>
