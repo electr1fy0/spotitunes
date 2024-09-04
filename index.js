@@ -99,6 +99,6 @@ function search(platform, searchTerm) {
 }
 
 // Event listener for YouTube Music button
-document.getElementById("ytMusicButton").addEventListener("click", function () {
+document.getElementById("ytm").addEventListener("click", function () {
   searchFromMusicPlatform("ytm");
 });
