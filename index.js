@@ -1,4 +1,5 @@
 console.log(`js file works`);
+
 // Search for music
 async function searchFromMusicPlatform(platform) {
   const linkOrTerm = document.getElementById("searchTerm").value;
@@ -7,15 +8,21 @@ async function searchFromMusicPlatform(platform) {
 
   if (linkOrTerm.includes("open.spotify.com")) {
     trackInfo = await getSpotifyTrackInfo(linkOrTerm);
+    if (trackInfo) {
+      const searchTerm = trackInfo.name;
+      console.log(`Song name: ${searchTerm}`);
+      await searchAndOpenYouTubeMusicTrack(searchTerm); // Use the track name to search on YouTube Music
+    }
   } else if (linkOrTerm.includes("music.youtube.com")) {
     trackInfo = await getYouTubeMusicTrackInfo(linkOrTerm);
+    if (trackInfo) {
+      const searchTerm = trackInfo.name;
+      console.log(`Song name: ${searchTerm}`);
+      search(platform, searchTerm);
+    }
   } else {
-    trackInfo = { name: linkOrTerm }; // Use the search term directly as the track name
+    search(platform, linkOrTerm); // Use the search term directly
   }
-
-  const searchTerm = trackInfo.name;
-  console.log(`Song name: ${searchTerm}`);
-  search(platform, searchTerm);
 }
 
 // Spotify info fetch
@@ -59,11 +66,11 @@ function extractVideoId(url) {
   return match ? match[1] : url;
 }
 
-// Update YouTube Music search URL
-async function searchAndUpdateYouTubeMusicTrack(linkOrTerm) {
+// Update YouTube Music search URL and open it
+async function searchAndOpenYouTubeMusicTrack(searchTerm) {
   try {
     const response = await fetch(
-      `/api/searchyoutube?q=${encodeURIComponent(linkOrTerm)}`,
+      `/api/searchyoutube?q=${encodeURIComponent(searchTerm)}`,
     );
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -73,9 +80,8 @@ async function searchAndUpdateYouTubeMusicTrack(linkOrTerm) {
     const firstResultUrl = data.url;
 
     if (firstResultUrl) {
-      // Update a specific element with the new URL, for example:
-      document.getElementById("youtubeMusicLink").href = firstResultUrl;
-      console.log(`YouTube Music URL updated: ${firstResultUrl}`);
+      window.open(firstResultUrl, "_blank");
+      console.log(`YouTube Music URL opened: ${firstResultUrl}`);
     } else {
       console.log("No results found.");
     }
@@ -83,8 +89,6 @@ async function searchAndUpdateYouTubeMusicTrack(linkOrTerm) {
     console.error("Error fetching YouTube Music search results:", error);
   }
 }
-
-// Example usage
 
 // Perform the search
 function search(platform, searchTerm) {
@@ -95,7 +99,10 @@ function search(platform, searchTerm) {
     url =
       "https://music.apple.com/search?term=" + encodeURIComponent(searchTerm);
   } else if (platform === "ytm") {
-    url = url;
+    url =
+      "https://music.youtube.com/search?q=" + encodeURIComponent(searchTerm);
   }
-  window.open(url, "_blank");
+  if (url) {
+    window.open(url, "_blank");
+  }
 }
