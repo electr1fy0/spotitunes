@@ -63,7 +63,7 @@ function extractVideoId(url) {
 async function searchAndUpdateYouTubeMusicTrack(linkOrTerm) {
   try {
     const response = await fetch(
-      `/api/searchYouTube?q=${encodeURIComponent(linkOrTerm)}`,
+      `/api/searchyoutube?q=${encodeURIComponent(linkOrTerm)}`,
     );
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
