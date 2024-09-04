@@ -4,6 +4,7 @@ console.log(`index.js is ok.`);
 async function searchFromMusicPlatform(platform) {
   const linkOrTerm = document.getElementById("searchTerm").value;
 
+  // Open the link directly if it matches the selected platform
   if (linkOrTerm.includes("open.spotify.com") && platform === "spotify") {
     window.open(linkOrTerm, "_blank");
     return;
@@ -14,37 +15,40 @@ async function searchFromMusicPlatform(platform) {
     return;
   }
 
-  let trackInfo = null;
+  let searchTerm = linkOrTerm;
 
+  // Fetch track information if a Spotify or YouTube Music link is provided
   if (linkOrTerm.includes("open.spotify.com")) {
-    trackInfo = await getSpotifyTrackInfo(linkOrTerm);
+    const trackInfo = await getSpotifyTrackInfo(linkOrTerm);
     if (trackInfo) {
-      const searchTerm = trackInfo.name;
+      searchTerm = trackInfo.name;
       console.log(`Song name: ${searchTerm}`);
-      search(platform, searchTerm); // Call the search function for Spotify
     }
   } else if (linkOrTerm.includes("music.youtube.com")) {
-    trackInfo = await getYouTubeMusicTrackInfo(linkOrTerm);
+    const trackInfo = await getYouTubeMusicTrackInfo(linkOrTerm);
     if (trackInfo) {
-      const searchTerm = trackInfo.name;
+      searchTerm = trackInfo.name;
       console.log(`Song name: ${searchTerm}`);
-      search(platform, searchTerm); // Call the search function for YouTube Music
     }
-  } else {
-    search(platform, linkOrTerm); // Use the search term directly
   }
+
+  // Perform the search based on the platform and search term
+  search(platform, searchTerm);
 }
 
 // Spotify info fetch
 async function getSpotifyTrackInfo(url) {
-  const response = await fetch(
-    `https://open.spotify.com/oembed?url=${encodeURIComponent(url)}`,
-  );
-  const data = await response.json();
-  const parts = data.title.split(" by ");
-  return {
-    name: parts[0],
-  };
+  try {
+    const response = await fetch(
+      `https://open.spotify.com/oembed?url=${encodeURIComponent(url)}`,
+    );
+    const data = await response.json();
+    const parts = data.title.split(" by ");
+    return { name: parts[0] };
+  } catch (error) {
+    console.error("Error fetching Spotify track info:", error);
+    return null;
+  }
 }
 
 // YouTube Music info fetch
@@ -57,15 +61,9 @@ async function getYouTubeMusicTrackInfo(url) {
     }
 
     const data = await response.json();
-
-    if (data.name) {
-      return { name: data.name };
-    } else {
-      console.error("Track information not found");
-      return null;
-    }
+    return data.name ? { name: data.name } : null;
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error fetching YouTube Music track info:", error);
     return null;
   }
 }
@@ -73,7 +71,36 @@ async function getYouTubeMusicTrackInfo(url) {
 // Extract YouTube video ID
 function extractVideoId(url) {
   const match = url.match(/v=([^&]*)/);
-  return match ? match[1] : url;
+  return match ? match[1] : null;
+}
+
+// Fetch the first Spotify track URL based on a search term
+async function getSpotifyTrackUrl(searchTerm) {
+  const query = encodeURIComponent(searchTerm);
+  const searchUrl = `https://open.spotify.com/search/${query}`;
+
+  try {
+    const response = await fetch(searchUrl);
+    const html = await response.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    // Look for the first track link in the parsed HTML
+    const trackLink = doc.querySelector('a[href*="/track/"]');
+
+    if (trackLink) {
+      const trackUrl = `https://open.spotify.com${trackLink.getAttribute("href")}`;
+      console.log(`Found track URL: ${trackUrl}`);
+      return trackUrl;
+    } else {
+      console.log("No track found.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching Spotify search results:", error);
+    return null;
+  }
 }
 
 // Update YouTube Music search URL and open it
@@ -105,10 +132,9 @@ async function search(platform, searchTerm) {
   let url = "";
 
   if (platform === "spotify") {
-    url = "https://open.spotify.com/search/" + encodeURIComponent(searchTerm);
+    url = await getSpotifyTrackUrl(searchTerm);
   } else if (platform === "apple music") {
-    url =
-      "https://music.apple.com/search?term=" + encodeURIComponent(searchTerm);
+    url = `https://music.apple.com/search?term=${encodeURIComponent(searchTerm)}`;
   } else if (platform === "ytm") {
     await searchAndOpenYouTubeMusicTrack(searchTerm); // Search and open YouTube Music
     return; // Exit the function since searchAndOpenYouTubeMusicTrack handles opening the URL
