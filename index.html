@@ -16,11 +16,15 @@
         rel="stylesheet">
 </head>
 
-<body class=" font-satoshi relative  h-full w-full bg-[#F2F1E9]  ">
+<body class="font-satoshi relative justify-between  h-full w-full bg-cover bg-top md:bg-right sm:bg-[center_right_30%] bg-[center_right_35%] md:bg-[center_right_40%] bg-no-repeat bg-fixed" style="background-image: url('images/scenery.jpg');" ">
+
+    <!--pattern
 <div class="fixed inset-0 -z-10 h-full w-full  bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-    <!--header-->
+   -->
+
+<!--header-->
     <header
-        class="flex z-0 justify-between items-center sm:mx-8 mx-2 my-6 bg-gradient-to-t from-[#EEEADF] to-[#EAE8DD] bg-opacity-90 border border-[#e2ded3] px-4 py-3 rounded-xl">
+        class="flex z-0 justify-between items-center sm:mx-8 mx-2 my-6 bg-[#EAEEDD]  bg-opacity-60 border border-[#e2ded3] px-4 py-3 rounded-xl">
 
         <div>
             <h1 class="font-satoshi sm:text-2xl text-xl flex justify-center text-neutral-950 font-medium ">♫ SpotiTunes
@@ -36,80 +40,79 @@
     </header>
 
 <!--status -->
-<div class="justify-center items-center flex ">
-    <div class="text-lg bg-orange-700 opacity-90  text-white items-center justify-between rounded-full flex gap-2  py-1 pl-2 pr-5">
+<div class="justify-center items-center flex lg:w-[55%] md:w-2/3 md:mt-12 md:ml-16 mx-2">
+    <div class="sm:text-lg text-md bg-orange-700 opacity-90  text-white items-center justify-between rounded-full flex gap-2  sm:py-1 py-2 pl-2 pr-5">
         <div class="bg-orange-300 bg- size-5 rounded-full"> </div>
         Apple Music links are not recognized yet.</div>
 </div>
 
-    <!--hero-->
-
-    <div
-        class="my-20 animate-slide-in  sm:mt-20  sm:space-y-8 space-y-4 font-instrument sm:text-[5rem] text-5xl flex justify-center  mb-14 font-light text-neutral-900 text-center">
-        <style>
-            @keyframes slideIn {
-                from {
-                    transform: translateY(-240px);
-                    opacity: 0;
-                }
-
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
+<!--hero-->
+<div
+    class="md:mb-20 sm:mt-16 mt-24 mb-16 animate-slide-in  lg:w-[55%] md:w-2/3 md:ml-16 sm:space-y-8 space-y-4 font-instrument sm:text-[4.5rem] text-5xl flex justify-center  mb-14 font-light text-neutral-900 text-center">
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateY(-240px);
+                opacity: 0;
             }
 
-            .animate-slide-in {
-                animation: slideIn 0.7s ease-out;
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
-        </style>
-        <h2 class="select-none space-y-1 tracking-tight sm:tracking-normal text-center">
-            Search music on&nbsp;<span class="italic">any<br></span>
-            <div class="flex items-center justify-center">
-                <div>streaming </div><img class="sm:w-16 w-12 mx-2 sm:mx-3 sm:rounded-2xl rounded-xl"
-                    src="images/icon.jpg" alt="music icons"><span class="sm:hidden flex">app</span><span
-                    class="hidden sm:flex">platform</span>
-            </div>
-        </h2>
-    </div>
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.7s ease-out;
+        }
+    </style>
+    <h2 class="select-none space-y-1 tracking-tight sm:tracking-normal text-center">
+        Search music on&nbsp;<span class="italic">any<br></span>
+        <div class="flex items-center justify-center">
+            <div>streaming </div><img class="sm:w-16 w-12 mx-2 sm:mx-3 sm:rounded-2xl rounded-xl"
+                src="images/icon.jpg" alt="music icons"><span class="sm:hidden flex">app</span><span
+                class="hidden sm:flex">platform</span>
+        </div>
+    </h2>
+</div>
 
 
-    <!--form-->
-    <div class="flex justify-center animate-slide-in-2 ">
-        <style>
-            @keyframes slideIn {
-                from {
-                    transform: translateY(-30px);
-                    opacity: 25%;
-                }
-
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
+<!--form-->
+<div class="flex justify-center animate-slide-in-2 lg:w-[55%] md:w-2/3 md:ml-16">
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 25%;
             }
 
-            .animate-slide-in-2 {
-                animation: slideIn 0.7s ease-out 0.1s;
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
-        </style>
+        }
+
+        .animate-slide-in-2 {
+            animation: slideIn 0.7s ease-out 0.1s;
+        }
+    </style>
 
 <!-- text box -->
         <form class="text-lg">
             <input
-                class="rounded-xl px-3 py-2 flex border-[0.5px] shadow-sm  h-12 w-full border-[#c0bdb4] justify-center sm:mb-10 mb-8"
+                class="rounded-xl px-3 py-2 flex border-[0.5px] shadow-sm  h-12 w-full border-[#C0BEB4] justify-center sm:mb-10 mb-8"
                 type="text" id="searchTerm" placeholder="Enter track name or link" required />
 
             <!--buttons -->
             <div class="sm:space-x-6 space-x-2 flex justify-between">
                 <button
-                    class="bg-[#2A234A] hover:scale-105 hover:bg-green-600 duration-200 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
+                    class="bg-[#373059] hover:scale-105 hover:bg-green-600 duration-200 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
                     type="button" onclick="searchFromMusicPlatform('spotify')">Spotify</button>
                 <button
-                    class="bg-[#2A234A] hover:scale-105 duration-200 hover:bg-pink-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
+                    class="bg-[#373059] hover:scale-105 duration-200 hover:bg-pink-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
                     type="button" onclick="searchFromMusicPlatform('apple music')">Apple Music</button>
                 <button
-                    id="ytm" class="bg-[#2A234A] hover:scale-105 duration-200 hover:bg-red-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
+                    id="ytm" class="bg-[#373059] hover:scale-105 duration-200 hover:bg-red-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
                     type="button" onclick="searchFromMusicPlatform('ytm')">Youtube Music</button>
             </div>
         </form>
@@ -119,7 +122,9 @@
     <div class="h-40 overflow-clip mt-20 fixed bottom-0 left-0 right-0 opacity-90 ">
 
     </div>
-    <!-- currently listening-->
+
+    
+    <!-- currently listening
     <div class=" my-20  text-lg">
         <div class=" sm:text-5xl text-[2.5rem] font-inter mb-8 lg:w-1/2 md:w-4/5 sm:w-4/5 w-4/5 mx-auto tracking-tight font-medium text-center">Discover</div>
 
@@ -138,6 +143,9 @@
 
             </div>
         </div>
+
+    </div>
+    -->
 
 
         <script src="index.js"></script>
