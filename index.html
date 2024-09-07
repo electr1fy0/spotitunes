@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="images/archive_circle.png">
+    <link rel="icon" type="image/x-icon" href="images/icon.png">
 
     <title>SpotiTunes</title>
     <link rel="stylesheet" href="output.css">
@@ -24,16 +24,17 @@
 
 <!--header-->
     <header
-        class="flex z-0 justify-between items-center sm:mx-8 mx-2 my-7 bg-[#EAEEDD]  bg-opacity-60 border border-[#e2ded3] sm:px-4 sm:py-3 py-2 pr-2 pl-4 rounded-xl">
+        class="flex z-0 justify-between items-center  sm:mx-8 mx-3 my-7 bg-[#EAEEDD]  bg-opacity-60 border border-[#e2ded3] sm:px-4 sm:py-3 py-2 pr-2 pl-2 rounded-xl">
 
-        <div>
-            <h1 class="font-satoshi sm:text-2xl text-xl flex justify-center text-neutral-950 font-medium ">♫ SpotiTunes
-            </h1>
+        <div class="flex justify-between gap-1 items-center">
+            <div class="">
+            <img src="images/icon.png" alt="logo" class=" sm:size-10 size-9"></div><div class=""><h1 class="font-satoshi sm:text-2xl text-xl flex justify-center text-neutral-950 font-medium ">SpotiTunes</h1></div>
+
         </div>
         <div class="flex ">
             <a href="https://github.com/electr1fy0/spotitunes">
                 <button
-                    class="rounded-md px-3 py-1 text-lg  bg-[#2A234A]  hover:bg-white hover:border border-[#e2ded3] box-border hover:text-black duration-200 text-white">GitHub</button>
+                    class="rounded-md px-3 py-1 text-lg  bg-[#2E2650]  hover:bg-white hover:border border-[#e2ded3] box-border hover:text-black duration-200 text-white">GitHub</button>
             </a>
 
         </div>
@@ -70,7 +71,7 @@
         Search music on&nbsp;<span class="italic">any<br></span>
         <div class="flex items-center justify-center">
             <div>streaming </div><img class="sm:w-16 w-12 mx-2 sm:mx-3 sm:rounded-2xl rounded-xl"
-                src="images/icon.jpg" alt="music icons"><span class="sm:hidden flex">app</span><span
+                src="images/music_icon.jpg" alt="music icons"><span class="sm:hidden flex">app</span><span
                 class="hidden sm:flex">platform</span>
         </div>
     </h2>
@@ -78,7 +79,7 @@
 
 
 <!--form-->
-<div class="flex justify-center animate-slide-in-2 lg:w-[55%] md:w-2/3 md:ml-16">
+<div class="flex justify-center animate-slide-in-2 lg:w-[55%] md:w-2/3 md:ml-16 mx-4">
     <style>
         @keyframes slideIn {
             from {
@@ -98,7 +99,7 @@
     </style>
 
 <!-- text box -->
-        <form class="text-lg">
+        <form class="text-lg ">
             <input
                 class="rounded-xl px-3 py-2 flex border-[0.5px] shadow-sm  h-12 w-full border-[#C0BEB4] justify-center sm:mb-10 mb-8"
                 type="text" id="searchTerm" placeholder="Enter track name or link" required />
@@ -125,7 +126,7 @@
 
     
     <!-- currently listening
-    <div class=" my-20  text-lg">
+    <div class=" my-20  text-lg lg:w-[55%] md:w-2/3 md:ml-16">
         <div class=" sm:text-5xl text-[2.5rem] font-inter mb-8 lg:w-1/2 md:w-4/5 sm:w-4/5 w-4/5 mx-auto tracking-tight font-medium text-center">Discover</div>
 
         <div
