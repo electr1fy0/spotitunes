@@ -103,7 +103,7 @@ async function getYouTubeMusicTrackInfo(url) {
 async function getAppleMusicTrackInfo(url) {
   try {
       // Extract the track ID from the URL
-      const idMatch = url.match(/id=(\d+)/);
+      const idMatch = url.slice(-10);
       if (!idMatch) {
           throw new Error('Invalid URL format');
       }
