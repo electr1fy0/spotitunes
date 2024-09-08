@@ -30,13 +30,13 @@ async function searchFromMusicPlatform(platform) {
       console.log(`Song name: ${searchTerm}`);
       search(platform, searchTerm); // Call the search function for YouTube Music
     }
-    else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
-      trackname = getAppleMusicTrack();
-      console.log(trackname);
-      const searchTerm = trackname;
-      search(platform,searchTerm);
+  } else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
+    const trackName = await getAppleMusicTrack();
+    if (trackName) {
+      console.log(trackName);
+      const searchTerm = trackName;
+      search(platform, searchTerm);
     }
-    
   } else {
     search(platform, linkOrTerm); // Use the search term directly
   }
