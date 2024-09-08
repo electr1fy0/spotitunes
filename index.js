@@ -100,31 +100,22 @@ async function getYouTubeMusicTrackInfo(url) {
 }
 
 // Apple Music info fetch
-async function getAppleMusicTrackInfo(url) {
+async function getAppleMusicTrackInfo(id) {
   try {
-      console.log('am fn works');
-      const id = url.slice(-10);
-      console.log(id);
-
-      const response = await fetch(`https://itunes.apple.com/lookup?id=${id}`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-          }
-      });
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-
+      const response = await fetch(`/api/proxy?id=${id}`);
       const data = await response.json();
-      console.log(data); // Process the response data
-
-      const trackname = data.results[0]?.trackName;
-      console.log(trackname)
+      
+      if (response.ok) {
+          const trackName = data.results[0]?.trackName;
+          return trackName;
+      } else {
+          console.error('API error:', data.error);
+          return null;
+      }
 
   } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
-      return null; // or handle the error as needed
+      return null; // Handle the error as needed
   }
 }
 
