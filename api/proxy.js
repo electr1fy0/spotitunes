@@ -1,12 +1,18 @@
 // api/proxy.js
 export default async function handler(req, res) {
+    // Ensure `id` query parameter is provided
     const url = req.query.id;
+    if (!url) {
+        return res.status(400).json({ error: 'Missing URL parameter' });
+    }
+    
     // Extract the ID from the URL
     const idMatch = url.match(/id=(\d+)/);
     if (!idMatch) {
-        return res.status(400).json({ error: 'Invalid ID' });
+        return res.status(400).json({ error: 'Invalid URL format' });
     }
     const id = idMatch[1];
+    
     const apiUrl = `https://itunes.apple.com/lookup?id=${id}`;
     
     try {

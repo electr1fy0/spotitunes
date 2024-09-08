@@ -100,9 +100,17 @@ async function getYouTubeMusicTrackInfo(url) {
 }
 
 // Apple Music info fetch
-async function getAppleMusicTrackInfo(id) {
+async function getAppleMusicTrackInfo(url) {
   try {
-      const response = await fetch(`/api/proxy?id=${id}`);
+      // Extract the track ID from the URL
+      const idMatch = url.match(/id=(\d+)/);
+      if (!idMatch) {
+          throw new Error('Invalid URL format');
+      }
+      const id = idMatch[1];
+      
+      // Call the proxy endpoint with the extracted ID
+      const response = await fetch(`/api/proxy?id=${encodeURIComponent(url)}`);
       const data = await response.json();
       
       if (response.ok) {
