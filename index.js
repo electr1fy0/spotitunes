@@ -100,6 +100,30 @@ async function searchAndOpenYouTubeMusicTrack(searchTerm) {
   }
 }
 
+
+function getAppleMusicTrack() {
+  console.log('am fn works')
+  fetch('https://itunes.apple.com/lookup?id=1766137051', {
+    method: 'GET', // or 'POST', 'PUT', etc.
+    headers: {
+        'Content-Type': 'application/json',
+        // Add more headers as needed
+    }
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json(); // or response.text() for non-JSON response
+})
+.then(data => {
+    console.log(data); // Process the response data
+})
+.catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+});
+}
+
 // Perform the search
 async function search(platform, searchTerm) {
   let url = "";
