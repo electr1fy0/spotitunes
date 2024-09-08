@@ -115,6 +115,11 @@ async function getAppleMusicTrackInfo(url) {
   }
 }
 
+function getAppleMusicURL(trackname) {
+  return;
+
+}
+
 
 
 

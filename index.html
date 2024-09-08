@@ -17,7 +17,7 @@
 </head>
 
 <body
-    class="font-satoshi relative justify-between bg-[#F6FAED] h-full w-full bg-cover bg-top md:bg-right sm:bg-[center_right_30%] bg-[center_right_35%] md:bg-[center_right_40%] bg-no-repeat bg-fixed"
+    class="font-satoshi relative justify-between bg-[#F6FAED] h-full w-full bg-cover lg:bg-top  sm:bg-[center_right_30%] bg-[center_right_35%] md:bg-[center_right_40%] bg-no-repeat bg-fixed"
     style="background-image: url('images/scenery.jpg');" ">
 
 <!--pattern
@@ -61,7 +61,7 @@
 
     <!--hero-->
     <div
-        class="md:mb-16 sm:mt-16 mt-24 mb-16 animate-slide-in  lg:w-[55%] md:w-2/3 md:ml-16 sm:space-y-8 space-y-4 font-instrument sm:text-[4.5rem] text-5xl flex justify-center  mb-14 font-light text-neutral-900 text-center">
+        class="md:mb-16 sm:mt-16 mt-24  animate-slide-in  lg:w-[55%] md:w-2/3 md:ml-16 sm:space-y-8 space-y-4 font-instrument sm:text-[4.5rem] text-5xl flex justify-center  mb-14 font-light text-neutral-900 text-center">
         <style>
             @keyframes slideIn {
                 from {
@@ -120,28 +120,36 @@
             <div class="sm:space-x-6 space-x-2 flex justify-between">
                 <div class="flex flex-col">
                     <button
-                        class="bg-[#385659] hover:scale-105 hover:bg-green-600  duration-200  py-2 sm:px-5 px-3 rounded-t-md border-b border-gray-500 sm:text-2xl text-lg text-white"
+                        class="bg-[#385659] hover:scale-105 hover:bg-green-600  duration-200  py-2 sm:px-5 px-3 rounded-md border-b border-gray-500 sm:text-2xl text-lg text-white"
                         type="button" onclick="searchForMusic('spotify')">Spotify</button>
-                    <button
+                                            <!--copy button
+
+                        <button
                         class="bg-[#385659] hover:scale-105 hover:bg-green-700  duration-200  py-2 sm:px-5 px-3 rounded-b-md sm:text-xl text-md text-white"
                         type="button" onclick="copyLInk('spotify')">Copy link</button>
+                        -->
                 </div>
                 <div class="flex flex-col">
 
                     <button
-                        class="bg-[#385659] hover:scale-105 duration-200   hover:bg-pink-500  py-2 sm:px-5 px-3 rounded-t-md border-b border-gray-500 sm:text-2xl text-lg text-white"
+                        class="bg-[#385659] hover:scale-105 duration-200   hover:bg-pink-500  py-2 sm:px-5 px-3 rounded-md border-b border-gray-500 sm:text-2xl text-lg text-white"
                         type="button" onclick="searchForMusic('apple music')">Apple Music</button>
+                        <!--copy button
                         <button
                         class="bg-[#385659] hover:scale-105 hover:bg-pink-600  duration-200  py-2 sm:px-5 px-3 rounded-b-md sm:text-xl text-md text-white"
                         type="button" onclick="copyLInk('apple music')">Copy link</button>
+                -->
                 </div>
                 <div class="flex flex-col">
                     <button id="ytm"
-                        class="bg-[#385659]  hover:scale-105 duration-200 hover:bg-red-500  py-2 sm:px-5 px-3 rounded-t-md border-b border-gray-500 sm:text-2xl text-lg text-white"
+                        class="bg-[#385659]  hover:scale-105 duration-200 hover:bg-red-500  py-2 sm:px-5 px-3 rounded-md border-b border-gray-500 sm:text-2xl text-lg text-white"
                         type="button" onclick="searchForMusic('ytm')">Youtube Music</button>
+                                                <!--copy button
+
                         <button
                         class="bg-[#385659] hover:scale-105 hover:bg-red-600  duration-200  py-2 sm:px-5 px-3 rounded-b-md sm:text-xl text-md text-white"
                         type="button" onclick="copyLink('ytm')">Copy link</button>
+                        -->
                 </div>
             </div>
         </form>
@@ -150,7 +158,10 @@
     <div class="h-40 overflow-clip mt-20 fixed bottom-0 left-0 right-0 opacity-90 ">
 
     </div>
-<button id="test" onclick="getAppleMusicTrackInfo('https://music.apple.com/in/album/antidote/1753101056?i=1753101077')">test</button>
+    <!--test button
+<button id="test" onclick="getAppleMusicTrackInfo('https://music.apple.com/in/album/antidote/1753101056?i=1753101077')" class="bg-gray-500 text-white rounded-lg  py-2 px-3 mx-auto">test</button>
+-->
+
 
     <!-- currently listening
     <div class=" my-20  text-lg lg:w-[55%] md:w-2/3 md:ml-16">
