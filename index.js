@@ -23,7 +23,7 @@ async function searchForMusic(platform) {
 
     // ytm
   } else if (linkOrTerm.includes("music.youtube.com")) {
-    if (platform === "ytm") { 
+    if (platform === "ytm") {
       window.open(linkOrTerm, "_blank");
       return;
     }
@@ -37,22 +37,22 @@ async function searchForMusic(platform) {
     }
   }
 
-// apple music
-else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
-  if (platform === "apple music") {
+  // apple music
+  else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
+    if (platform === "apple music") {
       window.open(linkOrTerm, "_blank");
       return;
-  } else {
+    } else {
       try {
-          let trackname = await getAppleMusicTrackInfo(linkOrTerm); // Ensure getAppleMusicTrackInfo is async
-          console.log(trackname);
-          search(platform, trackname);
+        let trackname = await getAppleMusicTrackInfo(linkOrTerm); // Ensure getAppleMusicTrackInfo is async
+        console.log(trackname);
+        search(platform, trackname);
       } catch (error) {
-          console.error('Error fetching track info:', error);
+        console.error('Error fetching track info:', error);
       }
+    }
   }
-}
-// if no link in text box
+  // if no link in text box
   else {
     search(platform, linkOrTerm); // Use the search term directly
   }
@@ -100,40 +100,9 @@ async function getYouTubeMusicTrackInfo(url) {
 }
 
 // Apple Music info fetch
-async function test() {
-  const url = "https://music.apple.com/in/album/main-hi-jhoothi/1765154224?i=1765154605"
-  try {
-    console.log('am fn works');
-    const id = url.slice(-10);
-    console.log(id);
-
-    // Use a CORS proxy service
-    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-    const iTunesUrl = `https://itunes.apple.com/lookup?id=${id}`;
-    const proxyUrl = corsProxy + iTunesUrl;
-
-    const response = await fetch(proxyUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'  // Required by some CORS proxies
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    console.log(data);
-
-    const trackname = data.results[0]?.trackName;
-    console.log(trackname);
-    return trackname;
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-    return null; // or handle the error as needed
-  }
+async function getAppleMusicTrackInfo() {
+  const x = fetch('https://itunes.apple.com/lookup?id=909253');
+  console.log(x)
 }
 
 
