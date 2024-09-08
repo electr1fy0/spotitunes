@@ -165,10 +165,10 @@ function showToast() {
 
   // Add the "show" class to DIV
   snack.classList.remove('hidden');
-  snack.classList.add('block');
+  snack.classList.add('flex');
   // After 3 seconds, remove the show class from DIV
   setTimeout(function () {
-    x.classList.replace("block", "hidden");
+    x.classList.replace("flex", "hidden");
   }, 3000);
 }
 
