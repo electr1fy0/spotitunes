@@ -145,7 +145,7 @@ async function searchAndOpenYouTubeMusicTrack(trackname) {
     if (firstResultUrl) {
       navigator.clipboard.writeText(firstResultUrl).then(() => {
         console.log('Link copied to clipboard');
-        window.prompt(`Link copied to clipboard`)
+        showToast();
       }).catch(err => {
         console.error('Failed to copy link: ', err);
       });
@@ -158,6 +158,16 @@ async function searchAndOpenYouTubeMusicTrack(trackname) {
   }
 }
 
+function showToast() {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className.replace("hidden", "block");  
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("block", "hidden"); }, 3000);
+}
 
 
 
@@ -178,6 +188,7 @@ async function search(platform, trackname) {
   if (url) {
     navigator.clipboard.writeText(url).then(() => {
       console.log('Link copied to clipboard');
+      showToast();
     }).catch(err => {
       console.error('Failed to copy link: ', err);
     });  }
