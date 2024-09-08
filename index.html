@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="images/icon.png">
+    <link rel="icon" type="image/x-icon" href="images/icon.jpg">
 
     <title>SpotiTunes</title>
     <link rel="stylesheet" href="output.css">
@@ -16,105 +16,133 @@
         rel="stylesheet">
 </head>
 
-<body class="font-satoshi relative justify-between bg-[#F6FAED] h-full w-full bg-cover bg-top md:bg-right sm:bg-[center_right_30%] bg-[center_right_35%] md:bg-[center_right_40%] bg-no-repeat bg-fixed" style="background-image: url('images/scenery.jpg');" ">
+<body
+    class="font-satoshi relative justify-between bg-[#F6FAED] h-full w-full bg-cover bg-top md:bg-right sm:bg-[center_right_30%] bg-[center_right_35%] md:bg-[center_right_40%] bg-no-repeat bg-fixed"
+    style="background-image: url('images/scenery.jpg');" ">
 
-    <!--pattern
-<div class="fixed inset-0 -z-10 h-full w-full  bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-   -->
+<!--pattern
+<div class=" fixed inset-0 -z-10 h-full w-full
+    bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)]
+    bg-[size:14px_24px]">
+    </div>
+    -->
 
-<!--header-->
+    <!--header-->
     <header
         class="flex z-0 justify-between items-center  sm:mx-8 mx-3 my-7 bg-[#EAEEDD]  bg-opacity-60 border border-[#e2ded3] sm:px-4 sm:py-3 py-2 pr-2 pl-2 rounded-xl">
 
         <div class="flex justify-between gap-1 items-center">
             <div class="">
-            <img src="images/icon.png" alt="logo" class=" sm:size-10 size-9"></div><div class=""><h1 class="font-satoshi sm:text-2xl text-xl flex justify-center text-neutral-950 font-medium ">SpotiTunes</h1></div>
+                <img src="images/icon.png" alt="logo" class=" sm:size-10 size-9">
+            </div>
+            <div class="">
+                <h1 class="font-satoshi sm:text-2xl text-xl flex justify-center text-neutral-950 font-medium ">
+                    SpotiTunes</h1>
+            </div>
 
         </div>
         <div class="flex ">
             <a href="https://github.com/electr1fy0/spotitunes">
                 <button
-                    class="rounded-md px-3 py-1 text-lg  bg-[#2E2650]  hover:bg-white hover:border border-[#e2ded3] box-border hover:text-black duration-200 text-white">GitHub</button>
+                    class="rounded-md px-3 py-1 text-lg  bg-[#324d50]  hover:bg-white hover:border border-[#e2ded3] box-border hover:text-black duration-200 text-white">GitHub</button>
             </a>
 
         </div>
     </header>
 
-<!--status -->
-<div class="justify-center items-center flex lg:w-[55%] md:w-2/3 md:mt-12 md:ml-16 mx-2">
-    <div class="sm:text-lg text-md bg-orange-700 opacity-90  text-white items-center justify-between rounded-full flex gap-2  sm:py-1 py-2 pl-2 pr-5">
-        <div class="bg-orange-300 bg- size-5 rounded-full"> </div>
-        Apple Music links are not recognized yet.</div>
-</div>
-
-<!--hero-->
-<div
-    class="md:mb-16 sm:mt-16 mt-24 mb-16 animate-slide-in  lg:w-[55%] md:w-2/3 md:ml-16 sm:space-y-8 space-y-4 font-instrument sm:text-[4.5rem] text-5xl flex justify-center  mb-14 font-light text-neutral-900 text-center">
-    <style>
-        @keyframes slideIn {
-            from {
-                transform: translateY(-240px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .animate-slide-in {
-            animation: slideIn 0.7s ease-out;
-        }
-    </style>
-    <h2 class="select-none space-y-1 tracking-tight sm:tracking-normal text-center">
-        Search music on&nbsp;<span class="italic">any<br></span>
-        <div class="flex items-center justify-center">
-            <div>streaming </div><img class="sm:w-16 w-12 mx-2 sm:mx-3 sm:rounded-2xl rounded-xl"
-                src="images/music_icon.jpg" alt="music icons"><span class="sm:hidden flex">app</span><span
-                class="hidden sm:flex">platform</span>
+    <!--status -->
+    <div class="justify-center items-center flex lg:w-[55%] md:w-2/3 md:mt-12 md:ml-16 mx-2">
+        <div
+            class="sm:text-lg text-md bg-orange-700 opacity-90  text-white items-center justify-between rounded-full flex gap-2  sm:py-1 py-2 pl-2 pr-5">
+            <div class="bg-orange-300 bg- size-5 rounded-full"> </div>
+            Apple Music links are not recognized yet.
         </div>
-    </h2>
-</div>
+    </div>
 
+    <!--hero-->
+    <div
+        class="md:mb-16 sm:mt-16 mt-24 mb-16 animate-slide-in  lg:w-[55%] md:w-2/3 md:ml-16 sm:space-y-8 space-y-4 font-instrument sm:text-[4.5rem] text-5xl flex justify-center  mb-14 font-light text-neutral-900 text-center">
+        <style>
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-240px);
+                    opacity: 0;
+                }
 
-<!--form-->
-<div class="flex justify-center animate-slide-in-2 lg:w-[55%] md:w-2/3 md:ml-16 mx-4">
-    <style>
-        @keyframes slideIn {
-            from {
-                transform: translateY(-30px);
-                opacity: 25%;
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
             }
 
-            to {
-                transform: translateY(0);
-                opacity: 1;
+            .animate-slide-in {
+                animation: slideIn 0.7s ease-out;
             }
-        }
+        </style>
+        <h2 class="select-none space-y-1 tracking-tight sm:tracking-normal text-center">
+            Search music on&nbsp;<span class="italic">any<br></span>
+            <div class="flex items-center justify-center">
+                <div>streaming </div><img class="sm:w-16 w-12 mx-2 sm:mx-3 sm:rounded-2xl rounded-xl"
+                    src="images/music_icon.jpg" alt="music icons"><span class="sm:hidden flex">app</span><span
+                    class="hidden sm:flex">platform</span>
+            </div>
+        </h2>
+    </div>
 
-        .animate-slide-in-2 {
-            animation: slideIn 0.7s ease-out 0.1s;
-        }
-    </style>
 
-<!-- text box -->
+    <!--form-->
+    <div class="flex justify-center animate-slide-in-2 lg:w-[55%] md:w-2/3 md:ml-16 mx-4">
+        <style>
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-30px);
+                    opacity: 25%;
+                }
+
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .animate-slide-in-2 {
+                animation: slideIn 0.7s ease-out 0.1s;
+            }
+        </style>
+
+        <!-- text box -->
         <form class="text-lg ">
             <input
-                class="rounded-xl px-3 py-2 flex border-[0.5px] shadow-sm  h-12 w-full border-[#C0BEB4] justify-center sm:mb-10 mb-8"
+                class="rounded-md px-3 py-2 flex border-[0.5px] shadow-sm  h-12 w-full border-[#C0BEB4] justify-center sm:mb-10 mb-8"
                 type="text" id="searchTerm" placeholder="Enter track name or link" required />
 
             <!--buttons -->
             <div class="sm:space-x-6 space-x-2 flex justify-between">
-                <button
-                    class="bg-[#373059] hover:scale-105 hover:bg-green-600 duration-200 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
-                    type="button" onclick="searchFromMusicPlatform('spotify')">Spotify</button>
-                <button
-                    class="bg-[#373059] hover:scale-105 duration-200 hover:bg-pink-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
-                    type="button" onclick="searchFromMusicPlatform('apple music')">Apple Music</button>
-                <button
-                    id="ytm" class="bg-[#373059] hover:scale-105 duration-200 hover:bg-red-500 rounded-2 py-2 sm:px-5 px-3 rounded-lg sm:text-2xl text-lg text-white"
-                    type="button" onclick="searchFromMusicPlatform('ytm')">Youtube Music</button>
+                <div class="flex flex-col">
+                    <button
+                        class="bg-[#385659] hover:scale-105 hover:bg-green-600  duration-200  py-2 sm:px-5 px-3 rounded-t-md border-b border-gray-500 sm:text-2xl text-lg text-white"
+                        type="button" onclick="searchFromMusicPlatform('spotify')">Spotify</button>
+                    <button
+                        class="bg-[#385659] hover:scale-105 hover:bg-green-700  duration-200  py-2 sm:px-5 px-3 rounded-b-md sm:text-xl text-md text-white"
+                        type="button" onclick="copyLInk('spotify')">Copy link</button>
+                </div>
+                <div class="flex flex-col">
+
+                    <button
+                        class="bg-[#385659] hover:scale-105 duration-200   hover:bg-pink-500  py-2 sm:px-5 px-3 rounded-t-md border-b border-gray-500 sm:text-2xl text-lg text-white"
+                        type="button" onclick="searchFromMusicPlatform('apple music')">Apple Music</button>
+                        <button
+                        class="bg-[#385659] hover:scale-105 hover:bg-pink-600  duration-200  py-2 sm:px-5 px-3 rounded-b-md sm:text-xl text-md text-white"
+                        type="button" onclick="copyLInk('apple music')">Copy link</button>
+                </div>
+                <div class="flex flex-col">
+                    <button id="ytm"
+                        class="bg-[#385659]  hover:scale-105 duration-200 hover:bg-red-500  py-2 sm:px-5 px-3 rounded-t-md border-b border-gray-500 sm:text-2xl text-lg text-white"
+                        type="button" onclick="searchFromMusicPlatform('ytm')">Youtube Music</button>
+                        <button
+                        class="bg-[#385659] hover:scale-105 hover:bg-red-600  duration-200  py-2 sm:px-5 px-3 rounded-b-md sm:text-xl text-md text-white"
+                        type="button" onclick="copyLink('ytm')">Copy link</button>
+                </div>
             </div>
         </form>
 
@@ -124,7 +152,7 @@
 
     </div>
 
-    
+
     <!-- currently listening
     <div class=" my-20  text-lg lg:w-[55%] md:w-2/3 md:ml-16">
         <div class=" sm:text-5xl text-[2.5rem] font-inter mb-8 lg:w-1/2 md:w-4/5 sm:w-4/5 w-4/5 mx-auto tracking-tight font-medium text-center">Discover</div>
@@ -149,7 +177,7 @@
     -->
 
 
-        <script src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 
 </html>
