@@ -101,8 +101,13 @@ async function getYouTubeMusicTrackInfo(url) {
 
 // Apple Music info fetch
 async function getAppleMusicTrackInfo() {
-  const x = fetch('https://itunes.apple.com/lookup?id=909253');
-  console.log(x)
+  try {
+    const response = await fetch('/api/apple-music');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Error fetching Apple Music data:', error);
+  }
 }
 
 
