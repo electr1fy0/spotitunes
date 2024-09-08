@@ -112,6 +112,7 @@ async function getAppleMusicTrackInfo(url) {
   } catch (error) {
     console.error('Error fetching Apple Music data:', error);
     throw error;
+    throw error;
   }
 }
 
