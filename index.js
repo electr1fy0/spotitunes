@@ -37,18 +37,21 @@ async function searchForMusic(platform) {
     }
   }
 
-  // apple music
-  else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
-    if (platform === "apple music") {
+// apple music
+else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
+  if (platform === "apple music") {
       window.open(linkOrTerm, "_blank");
       return;
-    }
-    else {
-      trackname = getAppleMusicTrackInfo(linkOrTerm);
-      console.log(trackname);
-      search(platform, trackname);
-    }
+  } else {
+      try {
+          let trackname = await getAppleMusicTrackInfo(linkOrTerm); // Ensure getAppleMusicTrackInfo is async
+          console.log(trackname);
+          search(platform, trackname);
+      } catch (error) {
+          console.error('Error fetching track info:', error);
+      }
   }
+}
 // if no link in text box
   else {
     search(platform, linkOrTerm); // Use the search term directly
