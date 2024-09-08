@@ -100,7 +100,8 @@ async function getYouTubeMusicTrackInfo(url) {
 }
 
 // Apple Music info fetch
-async function test(url) {
+async function test() {
+  const url = "https://music.apple.com/in/album/main-hi-jhoothi/1765154224?i=1765154605"
   try {
     console.log('am fn works');
     const id = url.slice(-10);
