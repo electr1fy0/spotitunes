@@ -188,12 +188,24 @@ async function search(platform, trackname) {
     return; // Exit the function since searchAndOpenYouTubeMusicTrack handles opening the URL
   }
 
+
+  function isOS() {
+    return navigator.userAgent.match(/ipad|iphone/i);
+  }
   if (url) {
-    navigator.clipboard.writeText(url).then(() => {
+    if (isOS) {
+      document.execCommand('copy');
       console.log('Link copied to clipboard');
       showToast();
-    }).catch(err => {
-      console.error('Failed to copy link: ', err);
-    });
+
+    }
+    else {
+      navigator.clipboard.writeText(url).then(() => {
+        console.log('Link copied to clipboard');
+        showToast();
+      }).catch(err => {
+        console.error('Failed to copy link: ', err);
+      });
+    }
   }
 }
