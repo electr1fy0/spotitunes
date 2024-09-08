@@ -100,32 +100,38 @@ async function getYouTubeMusicTrackInfo(url) {
 }
 
 // Apple Music info fetch
-async function getAppleMusicTrackInfo(url) {
+async function test(url) {
   try {
-      console.log('am fn works');
-      const id = url.slice(-10);
-      console.log(id);
+    console.log('am fn works');
+    const id = url.slice(-10);
+    console.log(id);
 
-      const response = await fetch(`https://itunes.apple.com/lookup?id=${id}`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-          }
-      });
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
+    // Use a CORS proxy service
+    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+    const iTunesUrl = `https://itunes.apple.com/lookup?id=${id}`;
+    const proxyUrl = corsProxy + iTunesUrl;
+
+    const response = await fetch(proxyUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'  // Required by some CORS proxies
       }
+    });
 
-      const data = await response.json();
-      console.log(data); // Process the response data
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
 
-      const trackname = data.results[0]?.trackName;
-      console.log(trackname)
-      return trackname
+    const data = await response.json();
+    console.log(data);
 
+    const trackname = data.results[0]?.trackName;
+    console.log(trackname);
+    return trackname;
   } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-      return null; // or handle the error as needed
+    console.error('There was a problem with the fetch operation:', error);
+    return null; // or handle the error as needed
   }
 }
 
