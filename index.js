@@ -44,8 +44,7 @@ async function searchForMusic(platform) {
       return;
     } else {
       try {
-
-        let trackname = await getAppleMusicTrackInfo(document.getElementById("textBox").value); // Ensure getAppleMusicTrackInfo is async
+        const trackname = await getAppleMusicTrackInfo(document.getElementById("textBox").value); // Ensure getAppleMusicTrackInfo is async
         console.log(trackname);
         search(platform, trackname);
       } catch (error) {
@@ -106,8 +105,7 @@ async function getAppleMusicTrackInfo(url) {
   const id = url.slice(-10);
   try {
     const response = await fetch(`/api/apple-music?id=${id}`);
-    const { trackname } = await response.json();
-    return trackname;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching Apple Music data:', error);
     throw error;  // Rethrow the error to handle it where the function is called
