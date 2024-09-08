@@ -168,7 +168,7 @@ function showToast() {
   snack.classList.add('flex');
   // After 3 seconds, remove the show class from DIV
   setTimeout(function () {
-    x.classList.replace("flex", "hidden");
+    snack.classList.replace("flex", "hidden");
   }, 3000);
 }
 
