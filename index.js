@@ -30,6 +30,13 @@ async function searchFromMusicPlatform(platform) {
       console.log(`Song name: ${searchTerm}`);
       search(platform, searchTerm); // Call the search function for YouTube Music
     }
+    else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
+      trackname = getAppleMusicTrack();
+      console.log(trackname);
+      const searchTerm = trackname;
+      search(platform,searchTerm);
+    }
+    
   } else {
     search(platform, linkOrTerm); // Use the search term directly
   }
@@ -119,11 +126,13 @@ function getAppleMusicTrack() {
 .then(data => {
     console.log(data); // Process the response data
     const trackName = data.results[0].trackName;
-  console.log(trackName);
+
 })
 .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
 });
+return trackname
+
 }
 
 // Perform the search
