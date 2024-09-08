@@ -161,13 +161,13 @@ async function searchAndOpenYouTubeMusicTrack(trackname) {
 
 function showToast() {
   // Get the snackbar DIV
-  var x = document.getElementById("snackbar");
+  let snack = document.getElementById("snackbar");
 
   // Add the "show" class to DIV
-  x.className.replace("hidden", "block");  
-
+  snack.classList.remove('hidden');
+  snack.classList.add('block');
   // After 3 seconds, remove the show class from DIV
-  setTimeout(function(){ x.className = x.className.replace("block", "hidden"); }, 3000);
+  setTimeout(function () { x.className = x.classList.replace("block", "hidden"); }, 3000);
 }
 
 
@@ -192,5 +192,6 @@ async function search(platform, trackname) {
       showToast();
     }).catch(err => {
       console.error('Failed to copy link: ', err);
-    });  }
+    });
+  }
 }
