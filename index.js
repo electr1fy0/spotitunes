@@ -1,72 +1,91 @@
 console.log(`index.js is ok.`);
 
+
 // Search for music
-async function searchFromMusicPlatform(platform) {
-  const linkOrTerm = document.getElementById("searchTerm").value;
-
-  if (linkOrTerm.includes("open.spotify.com") && platform === "spotify") {
-    window.open(linkOrTerm, "_blank");
-    return;
-  }
-
-  if (linkOrTerm.includes("music.youtube.com") && platform === "ytm") {
-    window.open(linkOrTerm, "_blank");
-    return;
-  }
-
+async function searchForMusic(platform) {
   let trackInfo = null;
+  const linkOrTerm = document.getElementById("textBox").value;
 
+  // spotify
   if (linkOrTerm.includes("open.spotify.com")) {
-    trackInfo = await getSpotifyTrackInfo(linkOrTerm);
-    if (trackInfo) {
-      const searchTerm = trackInfo.name;
-      console.log(`Song name: ${searchTerm}`);
-      search(platform, searchTerm); // Call the search function for Spotify
+    if (platform === "spotify") {
+      window.open(linkOrTerm, "_blank");
+      return;
     }
+    else {
+      trackInfo = await getSpotifyTrackInfo(linkOrTerm);
+      if (trackInfo) {
+        const trackname = trackInfo.name;
+        console.log(`Song name: ${trackname}`);
+        search(platform, trackname);
+      }
+    }
+
+    // ytm
   } else if (linkOrTerm.includes("music.youtube.com")) {
-    trackInfo = await getYouTubeMusicTrackInfo(linkOrTerm);
-    if (trackInfo) {
-      const searchTerm = trackInfo.name;
-      console.log(`Song name: ${searchTerm}`);
-      search(platform, searchTerm); // Call the search function for YouTube Music
+    if (platform === "ytm") { 
+      window.open(linkOrTerm, "_blank");
+      return;
     }
-  } else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
-    const trackName = await getAppleMusicTrack();
-    if (trackName) {
-      console.log(trackName);
-      const searchTerm = trackName;
-      search(platform, searchTerm);
+    else {
+      trackInfo = await getYouTubeMusicTrackInfo(linkOrTerm);
+      if (trackInfo) {
+        const trackname = trackInfo.name;
+        console.log(`Song name: ${trackname}`);
+        search(platform, trackname); // Call the search function for YouTube Music
+      }
     }
-  } else {
+  }
+
+  // apple music
+  else if (linkOrTerm.includes("music.apple.com") || linkOrTerm.includes("itunes.apple.com")) {
+    if (platform === "apple music") {
+      window.open(linkOrTerm, "_blank");
+      return;
+    }
+    else {
+      trackname = getAppleMusicTrackInfo(linkOrTerm);
+      console.log(trackname);
+      search(platform, trackname);
+    }
+  }
+// if no link in text box
+  else {
     search(platform, linkOrTerm); // Use the search term directly
   }
 }
 
-// Spotify info fetch
+
+
+// Spotify info (trackname) fetch
 async function getSpotifyTrackInfo(url) {
+  console.log('spty fn works')
+
   const response = await fetch(
     `https://open.spotify.com/oembed?url=${encodeURIComponent(url)}`,
   );
   const data = await response.json();
   const parts = data.title.split(" by ");
   return {
-    name: parts[0],
+    name: parts[0], //returning the trackname
   };
 }
 
-// YouTube Music info fetch
+
+// YouTube Music info (trackname) fetch
 async function getYouTubeMusicTrackInfo(url) {
+  console.log('ytm fn works')
+
   try {
     const videoId = extractVideoId(url);
     const response = await fetch(`/api/youtube?id=${videoId}`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
     const data = await response.json();
 
     if (data.name) {
-      return { name: data.name };
+      return { name: data.name }; //returning the trackname
     } else {
       console.error("Track information not found");
       return null;
@@ -77,6 +96,38 @@ async function getYouTubeMusicTrackInfo(url) {
   }
 }
 
+// Apple Music info (trackname) fetch
+function getAppleMusicTrackInfo(url) {
+  console.log('am fn works')
+  id = url.slice(68)
+  console.log(id)
+  fetch(`https://itunes.apple.com/lookup?id=${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json(); // or response.text() for non-JSON response
+    })
+    .then(data => {
+      console.log(data); // Process the response data
+      const trackName = data.results[0].trackName;
+      return trackname
+
+
+    })
+    .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+    });
+}
+
+
+
+
 // Extract YouTube video ID
 function extractVideoId(url) {
   const match = url.match(/v=([^&]*)/);
@@ -84,10 +135,10 @@ function extractVideoId(url) {
 }
 
 // Update YouTube Music search URL and open it
-async function searchAndOpenYouTubeMusicTrack(searchTerm) {
+async function searchAndOpenYouTubeMusicTrack(trackname) {
   try {
     const response = await fetch(
-      `/api/searchyoutube?q=${encodeURIComponent(searchTerm)}`,
+      `/api/searchyoutube?q=${encodeURIComponent(trackname)}`,
     );
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -108,44 +159,19 @@ async function searchAndOpenYouTubeMusicTrack(searchTerm) {
 }
 
 
-function getAppleMusicTrack() {
-  console.log('am fn works')
-  fetch('https://itunes.apple.com/lookup?id=1766137051', {
-    method: 'GET', // or 'POST', 'PUT', etc.
-    headers: {
-        'Content-Type': 'application/json',
-        // Add more headers as needed
-    }
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json(); // or response.text() for non-JSON response
-})
-.then(data => {
-    console.log(data); // Process the response data
-    const trackName = data.results[0].trackName;
 
-})
-.catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-});
-return trackname
-
-}
 
 // Perform the search
-async function search(platform, searchTerm) {
+async function search(platform, trackname) {
   let url = "";
 
   if (platform === "spotify") {
-    url = "https://open.spotify.com/search/" + encodeURIComponent(searchTerm);
+    url = "https://open.spotify.com/search/" + encodeURIComponent(trackname);
   } else if (platform === "apple music") {
     url =
-      "https://music.apple.com/search?term=" + encodeURIComponent(searchTerm);
+      "https://music.apple.com/search?term=" + encodeURIComponent(trackname);
   } else if (platform === "ytm") {
-    await searchAndOpenYouTubeMusicTrack(searchTerm); // Search and open YouTube Music
+    await searchAndOpenYouTubeMusicTrack(trackname); // Search and open YouTube Music
     return; // Exit the function since searchAndOpenYouTubeMusicTrack handles opening the URL
   }
 
