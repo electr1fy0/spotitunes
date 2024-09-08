@@ -111,7 +111,7 @@ async function getAppleMusicTrackInfo(url) {
     return trackInfo;
   } catch (error) {
     console.error('Error fetching Apple Music data:', error);
-    throw error;  
+    throw error;
   }
 }
 
@@ -143,7 +143,12 @@ async function searchAndOpenYouTubeMusicTrack(trackname) {
     const firstResultUrl = data.url;
 
     if (firstResultUrl) {
-      window.open(firstResultUrl, "_blank");
+      navigator.clipboard.writeText(firstResultUrl).then(() => {
+        console.log('Link copied to clipboard');
+        window.prompt(`Link copied to clipboard`)
+      }).catch(err => {
+        console.error('Failed to copy link: ', err);
+      });
       console.log(`YouTube Music URL opened: ${firstResultUrl}`);
     } else {
       console.log("No results found.");
@@ -171,6 +176,9 @@ async function search(platform, trackname) {
   }
 
   if (url) {
-    window.open(url, "_blank");
-  }
+    navigator.clipboard.writeText(url).then(() => {
+      console.log('Link copied to clipboard');
+    }).catch(err => {
+      console.error('Failed to copy link: ', err);
+    });  }
 }
