@@ -44,7 +44,8 @@ async function searchForMusic(platform) {
       return;
     } else {
       try {
-        let trackname = await getAppleMusicTrackInfo(linkOrTerm); // Ensure getAppleMusicTrackInfo is async
+
+        let trackname = await getAppleMusicTrackInfo(document.getElementById("textBox").value); // Ensure getAppleMusicTrackInfo is async
         console.log(trackname);
         search(platform, trackname);
       } catch (error) {
