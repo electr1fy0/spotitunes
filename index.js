@@ -100,13 +100,15 @@ async function getYouTubeMusicTrackInfo(url) {
 }
 
 // Apple Music info fetch
-async function getAppleMusicTrackInfo() {
+async function getAppleMusicTrackInfo(url) {
+  const id = url.slice(-10);
   try {
-    const response = await fetch('/api/apple-music');
-    const data = await response.json();
-    console.log(data);
+    const response = await fetch(`/api/apple-music?id=${id}`);
+    const { trackname } = await response.json();
+    return trackname;
   } catch (error) {
     console.error('Error fetching Apple Music data:', error);
+    throw error;  // Rethrow the error to handle it where the function is called
   }
 }
 
