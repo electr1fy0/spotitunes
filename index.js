@@ -101,6 +101,7 @@ async function getYouTubeMusicTrackInfo(url) {
 
 // Apple Music info fetch
 async function getAppleMusicTrackInfo(url) {
+  console.log(`url is ${url}`)
   const id = url.slice(-10);
   try {
     const response = await fetch(`/api/apple-music?id=${id}`);
