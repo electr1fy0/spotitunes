@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
     try {
-      const response = await fetch('https://itunes.apple.com/lookup?id=909253');
+      const response = await fetch('https://itunes.apple.com/lookup?id=1766137051');
       const data = await response.json();
       res.status(200).json(data);
     } catch (error) {
