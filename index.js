@@ -99,6 +99,7 @@ async function getYouTubeMusicTrackInfo(url) {
   }
 }
 
+// Apple Music info fetch
 async function getAppleMusicTrackInfo(url) {
   try {
       console.log('am fn works');
@@ -111,7 +112,6 @@ async function getAppleMusicTrackInfo(url) {
               'Content-Type': 'application/json',
           }
       });
-
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
@@ -119,8 +119,8 @@ async function getAppleMusicTrackInfo(url) {
       const data = await response.json();
       console.log(data); // Process the response data
 
-      const trackName = data.results[0]?.trackName;
-      return trackName;
+      const trackname = data.results[0]?.trackName;
+      console.log(trackname)
 
   } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
