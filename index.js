@@ -100,31 +100,27 @@ async function getYouTubeMusicTrackInfo(url) {
 }
 
 // Apple Music info fetch
-async function getAppleMusicTrackInfo(url) {
-  try {
-      // Extract the track ID from the URL
-      const idMatch = url.slice(-10);
-      if (!idMatch) {
-          throw new Error('Invalid URL format');
-      }
-      const id = idMatch[1];
-      
-      // Call the proxy endpoint with the extracted ID
-      const response = await fetch(`/api/proxy?id=${encodeURIComponent(url)}`);
-      const data = await response.json();
-      
-      if (response.ok) {
-          const trackName = data.results[0]?.trackName;
-          return trackName;
-      } else {
-          console.error('API error:', data.error);
-          return null;
-      }
+function test() {
 
-  } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-      return null; // Handle the error as needed
-  }
+const url = 'https://itunes.apple.com/lookup?id=1765154605';
+
+// Fetch data from the iTunes API
+fetch(url)
+  .then(response => response.json())  // Parse the response as JSON
+  .then(data => {
+    // Extract track name from the response
+    const trackName = data.results[0]?.trackName;
+    
+    // Log the track name to the console
+    console.log('Track Name:', trackName);
+
+    // Return the track name (if needed)
+    return trackName;
+  })
+  .catch(error => {
+    // Handle any errors
+    console.error('Error fetching data:', error);
+  });
 }
 
 
