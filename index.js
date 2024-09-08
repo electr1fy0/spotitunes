@@ -118,6 +118,8 @@ function getAppleMusicTrack() {
 })
 .then(data => {
     console.log(data); // Process the response data
+    const trackName = data.results[0].trackName;
+  console.log(trackName);
 })
 .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
