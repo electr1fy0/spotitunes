@@ -14,12 +14,12 @@ export default async function handler(req, res) {
       const data = await response.json();
       if (data.results && data.results.length > 0) {
         const trackName = data.results[0].trackName || 'Track not found';
-        res.status(200).json({ trackName });
+        res.status(200).send(trackName);  // Send only the track name as plain text
       } else {
-        res.status(404).json({ error: 'Track not found' });
+        res.status(404).send('Track not found');  // Send a plain text message
       }
     } catch (error) {
       console.error('Error:', error);
-      res.status(500).json({ error: 'Failed to fetch data' });
+      res.status(500).send('Failed to fetch data');  // Send a plain text message
     }
   }
