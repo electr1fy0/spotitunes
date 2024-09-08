@@ -104,9 +104,11 @@ async function getAppleMusicTrackInfo(url) {
   console.log(`url is ${url}`)
   const id = url.slice(-10);
   try {
-    const trackInfo = await response.text();
-    return trackInfo || 'Track name not found';
+    const response = await fetch(`/api/apple-music?id=${id}`);
 
+    let trackInfo = await response.text();
+    console.log(trackInfo);
+    return trackInfo;
   } catch (error) {
     console.error('Error fetching Apple Music data:', error);
     throw error;  // Rethrow the error to handle it where the function is called
