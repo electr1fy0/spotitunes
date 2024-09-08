@@ -108,7 +108,7 @@ async function getAppleMusicTrackInfo(url) {
 
 
     console.log(response);
-    return trackInfo;
+    return response;
   } catch (error) {
     console.error('Error fetching Apple Music data:', error);
     throw error;  // Rethrow the error to handle it where the function is called
