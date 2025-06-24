@@ -1,30 +1,27 @@
 package model
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
+	. "spotitunes/api"
+	. "spotitunes/style"
 
 	"github.com/charmbracelet/bubbles/table"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-
-	. "spotitunes/api"
-	. "spotitunes/style"
 )
 
 type ScreenState int
 
-type SearchResultMsg APIResponse
+type SearchresultMsg Result
 type ErrMsg error
 
 const (
 	Menu ScreenState = iota
 	Input
-	Result
+	result
 )
 
 type Model struct {
@@ -65,7 +62,7 @@ func (m Model) updateMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, textinput.Blink
 			case 1:
 				m.State = Input
-				m.Message = "Enter Apple Music link:"
+				m.Message = "Enter Spotify link:"
 				return m, textinput.Blink
 			case 2:
 				return m, tea.Quit
@@ -82,7 +79,7 @@ func (m Model) updateInput(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if key, ok := msg.(tea.KeyMsg); ok && key.Type == tea.KeyEnter {
 		link := m.TextInput.Value()
 		m.Message = "Searching..."
-		m.State = Result
+		m.State = result
 		return m, FetchTracks(link)
 	}
 	return m, cmd
@@ -90,10 +87,10 @@ func (m Model) updateInput(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m Model) updateResult(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-	case SearchResultMsg:
-		rows := make([]table.Row, 0, len(msg.Results))
-		for _, result := range msg.Results {
-			rows = append(rows, table.Row{result.TrackName, result.ArtistName, result.Kind})
+	case SearchresultMsg:
+		rows := make([]table.Row, 0, len(msg.Tracks.Items))
+		for _, result := range msg.Tracks.Items {
+			rows = append(rows, table.Row{result.Name, result.Artists[0].Name, result.ExternalURLs.Spotify})
 		}
 		m.Table.SetRows(rows)
 		return m, nil
@@ -113,7 +110,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case Input:
 		return m.updateInput(msg)
 
-	case Result:
+	case result:
 		return m.updateResult(msg)
 
 	default:
@@ -152,29 +149,48 @@ func (m Model) View() string {
 		s += m.TextInput.View()
 		s += "\n\n" + HintStyle.Render("Press Enter to submit.")
 		return ContainerStyle.Render(s)
-	case Result:
+	case result:
 		return m.Table.View() + "\n"
 	}
 
 	return ContainerStyle.Render("Unknown state")
 }
 
+// iTunes API (disabled for now)
+// func FetchTracks(query string) tea.Cmd {
+// 	return func() tea.Msg {
+// 		res, err := request(query)
+// 		if err != nil {
+// 			panic(err)
+// 		}
+// 		defer res.Body.Close()
+// 		body, err := io.ReadAll(res.Body)
+
+// 		var ApiResp APIResponse
+// 		err = json.Unmarshal(body, &ApiResp)
+// 		if err != nil {
+// 			println("Error")
+// 			os.Exit(1)
+// 		}
+// 		return SearchresultMsg(ApiResp)
+// 	}
+// }
+
 func FetchTracks(query string) tea.Cmd {
 	return func() tea.Msg {
-		res, err := request(query)
+		token, err := GetAccessToken(ClientID, ClientSecret)
 		if err != nil {
-			panic(err)
-		}
-		defer res.Body.Close()
-		body, err := io.ReadAll(res.Body)
-
-		var ApiResp APIResponse
-		err = json.Unmarshal(body, &ApiResp)
-		if err != nil {
-			println("Error")
+			fmt.Println("Error: ", err)
 			os.Exit(1)
 		}
-		return SearchResultMsg(ApiResp)
+
+		result, err := Search(query, token)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			os.Exit(1)
+		}
+		return SearchresultMsg(result)
+
 	}
 }
 
