@@ -27,6 +27,5 @@ var (
 			Padding(1, 4).
 			Margin(1, 2).
 			BorderForeground(lipgloss.Color("63")).
-		// Align(lipgloss.Center).
-		Width(60)
+			Width(60)
 )
