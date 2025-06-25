@@ -11,17 +11,16 @@ import (
 )
 
 func main() {
-	// TextBox (empty rn)
+
 	ti := textinput.New()
 	ti.Placeholder = "Enter trackname..."
 	ti.Focus()
 	ti.CharLimit = 256
 	ti.Width = 40
 
-	// Table (empty rows rn, idk why even needed )
 	cols := []table.Column{
 		{Title: "Title", Width: 20},
-		{Title: "Artist", Width: 10},
+		{Title: "Artist", Width: 15},
 		{Title: "URL", Width: 100},
 	}
 
@@ -32,10 +31,9 @@ func main() {
 		table.WithHeight(7),
 	)
 
-	// Instantiating the Model struct with those weird empty values
 	m := Model{
 		Choices: []string{
-			"Get  Music link",
+			"Get Apple Music link",
 			"Get Spotify link",
 			"Exit",
 		},
@@ -43,10 +41,9 @@ func main() {
 		TextInput: ti,
 		State:     Menu,
 	}
-	// Creating the program
+
 	p := tea.NewProgram(m, tea.WithAltScreen())
 
-	// Running the program
 	if _, err := p.Run(); err != nil {
 		fmt.Println("Error: ", err)
 		os.Exit(1)

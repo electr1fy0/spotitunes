@@ -19,7 +19,7 @@ var (
 	ClientSecret = os.Getenv("SPOTIFY_SECRET")
 )
 
-type Result struct {
+type SpotifyResult struct {
 	Tracks struct {
 		Items []struct {
 			Name    string `json:"name"`
@@ -74,7 +74,7 @@ func GetAccessToken(clientID, clientSecret string) (string, error) {
 
 }
 
-func Search(query, accessToken string) (Result, error) {
+func Search(query, accessToken string) (SpotifyResult, error) {
 	// query = strings.ReplaceAll(query, " ", "%20")
 	params := url.Values{}
 	params.Set("q", query)
@@ -87,15 +87,15 @@ func Search(query, accessToken string) (Result, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return Result{}, err
+		return SpotifyResult{}, err
 	}
 
 	defer resp.Body.Close()
 
-	var result Result
+	var result SpotifyResult
 	body, _ := io.ReadAll(resp.Body)
 	if err := json.Unmarshal(body, &result); err != nil {
-		return Result{}, err
+		return SpotifyResult{}, err
 	}
 
 	// for i, item := range result.Tracks.Items {

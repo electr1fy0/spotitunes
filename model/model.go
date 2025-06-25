@@ -1,8 +1,11 @@
 package model
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"net/url"
 	"os"
 	. "spotitunes/api"
 	. "spotitunes/style"
@@ -15,7 +18,6 @@ import (
 
 type ScreenState int
 
-type SearchresultMsg Result
 type ErrMsg error
 
 const (
@@ -58,7 +60,7 @@ func (m Model) updateMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 			switch m.Cursor {
 			case 0:
 				m.State = Input
-				m.Message = "Enter Spotify link:"
+				m.Message = "Enter Apple Music link:"
 				return m, textinput.Blink
 			case 1:
 				m.State = Input
@@ -80,19 +82,35 @@ func (m Model) updateInput(msg tea.Msg) (tea.Model, tea.Cmd) {
 		link := m.TextInput.Value()
 		m.Message = "Searching..."
 		m.State = result
-		return m, FetchTracks(link)
+
+		switch m.Cursor {
+		case 0:
+			return m, FetchItunes(link)
+		case 1:
+			return m, FetchSpotify(link)
+		default:
+			os.Exit(1)
+		}
 	}
+
 	return m, cmd
 }
 
 func (m Model) updateResult(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-	case SearchresultMsg:
+	case SpotifyResult:
 		rows := make([]table.Row, 0, len(msg.Tracks.Items))
 		for _, result := range msg.Tracks.Items {
 			rows = append(rows, table.Row{result.Name, result.Artists[0].Name, result.ExternalURLs.Spotify})
 		}
 		m.Table.SetRows(rows)
+		return m, nil
+	case ItunesResponse:
+		rows := make([]table.Row, 0, len(msg.Results))
+		for _, result := range msg.Results {
+			rows = append(rows, table.Row{result.TrackName, result.ArtistName, result.TrackViewURL})
+			m.Table.SetRows(rows)
+		}
 		return m, nil
 
 	case ErrMsg:
@@ -176,7 +194,7 @@ func (m Model) View() string {
 // 	}
 // }
 
-func FetchTracks(query string) tea.Cmd {
+func FetchSpotify(query string) tea.Cmd {
 	return func() tea.Msg {
 		token, err := GetAccessToken(ClientID, ClientSecret)
 		if err != nil {
@@ -189,13 +207,37 @@ func FetchTracks(query string) tea.Cmd {
 			fmt.Println("Error: ", err)
 			os.Exit(1)
 		}
-		return SearchresultMsg(result)
+		return result
 
 	}
 }
 
-func request(trackName string) (*http.Response, error) {
-	url := fmt.Sprintf("https://itunes.apple.com/search?term=%s&entity=musicTrack&limit=5", trackName)
-	// itunes only for testing, wanna use spotify api
-	return http.Get(url)
+func FetchItunes(query string) tea.Cmd {
+	return func() tea.Msg {
+		query = url.QueryEscape(query)
+		url := fmt.Sprintf("https://itunes.apple.com/search?term=%s&entity=musicTrack&limit=5", query)
+
+		resp, err := http.Get(url)
+		if err != nil {
+			println("Error: ", err)
+			os.Exit(1)
+		}
+
+		defer resp.Body.Close()
+		body, err := io.ReadAll(resp.Body)
+		// fmt.Println("Raw body:\n", string(body)) // ← add this
+
+		if err != nil {
+			println("Error: ", err)
+			os.Exit(1)
+		}
+		var result ItunesResponse
+		err = json.Unmarshal(body, &result)
+
+		if err != nil {
+			fmt.Println("Error unmarshalling itunes: ", err)
+			os.Exit(1)
+		}
+		return result
+	}
 }

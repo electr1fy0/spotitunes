@@ -1,6 +1,6 @@
 package api
 
-type APIResponse struct {
+type ItunesResponse struct {
 	ResultCount int     `json:"resultCount"`
 	Results     []Track `json:"results"`
 }
