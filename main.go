@@ -35,6 +35,7 @@ func main() {
 		Choices: []string{
 			"Get Apple Music link",
 			"Get Spotify link",
+			"Get YT Music link",
 			"Exit",
 		},
 		Table:     t,

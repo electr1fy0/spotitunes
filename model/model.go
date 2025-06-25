@@ -25,6 +25,7 @@ const (
 	Menu ScreenState = iota
 	Input
 	result
+	fail
 )
 
 type Model struct {
@@ -71,6 +72,9 @@ func (m Model) updateMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.Message = "Enter Spotify link:"
 				return m, textinput.Blink
 			case 2:
+				m.State = fail
+				return m, nil
+			case 3:
 				return m, tea.Quit
 			}
 		}
@@ -147,6 +151,17 @@ func (m Model) updateResult(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
+func (m Model) updateFail(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "q", "ctrl-c":
+			return m, tea.Quit
+		}
+	}
+	return m, nil
+}
+
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch m.State {
 	case Menu:
@@ -157,7 +172,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case result:
 		return m.updateResult(msg)
-
+	case fail:
+		return m.updateFail(msg)
 	default:
 		var cmd tea.Cmd
 		return m, cmd
@@ -200,7 +216,12 @@ func (m Model) View() string {
 		s += "\n\n" + HintStyle.Render("Use ↑/↓ to navigate, ⏎ to open, q to quit (your career)")
 
 		return s
+	case fail:
+		m.Message = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("205")).Render("\n\nNobody uses YT Music")
+		m.Message += "\n\n" + HintStyle.Render("Use q to quit (and rethink your choices)")
 
+		s := m.Message
+		return s
 	}
 
 	return ContainerStyle.Render("Unknown state")
