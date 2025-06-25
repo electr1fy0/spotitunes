@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -37,18 +36,18 @@ type Result struct {
 const searchURL = "https://api.spotify.com/v1/search"
 const tokenURL = "https://accounts.spotify.com/api/token"
 
-func main() {
+// For testing as an individual file (disabled)
+// func main() {
+// 	token, err := GetAccessToken(ClientID, ClientSecret)
+// 	if err != nil {
+// 		fmt.Println("Error: ", err)
+// 		return
+// 	}
 
-	token, err := GetAccessToken(ClientID, ClientSecret)
-	if err != nil {
-		fmt.Println("Error: ", err)
-		return
-	}
+// 	query := strings.Join(os.Args[1:], " ")
+// 	Search(query, token)
 
-	query := strings.Join(os.Args[1:], " ")
-	Search(query, token)
-
-}
+// }
 
 func GetAccessToken(clientID, clientSecret string) (string, error) {
 	data := url.Values{}

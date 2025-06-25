@@ -18,11 +18,11 @@ func main() {
 	ti.CharLimit = 256
 	ti.Width = 40
 
-	// Table (empty rows rn)
+	// Table (empty rows rn, idk why even needed )
 	cols := []table.Column{
 		{Title: "Title", Width: 20},
 		{Title: "Artist", Width: 10},
-		{Title: "URL", Width: 40},
+		{Title: "URL", Width: 100},
 	}
 
 	t := table.New(
