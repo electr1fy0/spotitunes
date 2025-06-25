@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"runtime"
 	. "spotitunes/api"
 	. "spotitunes/style"
 
@@ -276,5 +277,13 @@ func FetchItunes(query string) tea.Cmd {
 }
 
 func openLink(url string) {
-	exec.Command("open", url).Start()
+	switch runtime.GOOS {
+	case "windows":
+		exec.Command("cmd", "/c", "start", "", url)
+	case "darwin":
+		exec.Command("open", url).Start()
+
+	default:
+		exec.Command("xdg-open", url).Start()
+	}
 }
