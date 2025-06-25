@@ -130,23 +130,19 @@ func (m Model) updateResult(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "down", "j":
-			if m.Cursor != length-1 {
-				m.Cursor++
-			}
-
-		case "up", "k":
-			if m.Cursor != 0 {
-				m.Cursor--
-			}
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "enter":
-			link := m.Table.Rows()[m.Cursor][2]
+			link := m.Table.Rows()[m.Table.Cursor()][2]
 			openLink(link)
+			return m, nil
 		}
 
-		m.Table.SetCursor(m.Cursor)
+		var cmd tea.Cmd
+		m.Table, cmd = m.Table.Update(msg)
+		m.Cursor = m.Table.Cursor()
+		return m, cmd
+
 	}
 
 	return m, nil
@@ -186,17 +182,17 @@ func (m Model) View() string {
 
 	case Menu:
 		var s string
-		s += TitleStyle.Render("Spotitunes 🎧") + "\n\n"
+		s += TitleStyle.Render("SPOTITUNES") + "\n\n"
 
 		for i, choice := range m.Choices {
-			Cursor := " "
-			styled := UnselectedStyle.Render(choice)
+			// Cursor := " "
+			styled := UnselectedStyle.Render(" " + choice + " ")
 			if m.Cursor == i {
-				Cursor = CursorStyle.Render("> ")
-				styled = SelectedStyle.Render(choice)
+				// Cursor = CursorStyle.Render("> ")
+				styled = SelectedStyle.Render(" " + choice + " ")
 			}
-			row := lipgloss.JoinHorizontal(1, Cursor, styled)
-			s += row + "\n"
+			// styled := lipgloss.JoinHorizontal(1, Cursor, styled)
+			s += styled + "\n"
 		}
 
 		if m.Message != "" {
@@ -204,22 +200,23 @@ func (m Model) View() string {
 		}
 
 		s += "\n\n" + HintStyle.Render("Use ↑/↓ to navigate, q to quit (your life).")
+
 		return ContainerStyle.Render(s)
 
 	case Input:
-		s := MessageStyle.Render(m.Message) + "\n\n"
+		s := TitleStyle.Render(m.Message) + "\n\n"
 		s += m.TextInput.View()
 		s += "\n\n" + HintStyle.Render("Press Enter to submit.")
 		return ContainerStyle.Render(s)
 	case result:
 		s := m.Table.View()
 
-		s += "\n\n" + HintStyle.Render("Use ↑/↓ to navigate, ⏎ to open, q to quit (your career)")
+		s += "\n\n" + HintStyle.Width(70).Render("Use ↑/↓ to navigate, ⏎  to open, q to quit (your career)")
 
 		return s
 	case fail:
 		m.Message = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("205")).Render("\n\nNobody uses YT Music")
-		m.Message += "\n\n" + HintStyle.Render("Use q to quit (and rethink your choices)")
+		m.Message += "\n\n" + HintStyle.Width(80).Render("Use q to quit (and rethink your choices)")
 
 		s := m.Message
 		return s
@@ -259,7 +256,7 @@ func FetchItunes(query string) tea.Cmd {
 
 		defer resp.Body.Close()
 		body, err := io.ReadAll(resp.Body)
-		// fmt.Println("Raw body:\n", string(body)) // ← add this
+		// fmt.Println("Raw body:\n", string(body))
 
 		if err != nil {
 			println("Error: ", err)
