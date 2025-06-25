@@ -1,12 +1,18 @@
 # Spotitunes
 Search music from both Spotify and Apple Music. All in your terminal.
-Feel free to explore, but don't rely on anything just yet.
+WIP. Feel free to explore, but don't rely on anything just yet.
+
+<p align="center">
+<img width="48%" alt="image" src="https://github.com/user-attachments/assets/34d4827f-7681-4d21-8190-bda91b9e32cc" />
+<img width="48%" alt="image" src="https://github.com/user-attachments/assets/5d3f7417-755c-4b5a-9fc9-9d67dca4ec3d" />
+</p>
 
 ## TODO
-- [ ] YTM API Implementation
-- [ ] Link parsing
 - [x] Enable iTunes API
+- [ ] Better error handling
+- [ ] Link parsing
 - [ ] Better styling
+- [ ] YTM API Implementation
 
 Contributions, ideas, and bug reports are welcome.
 
