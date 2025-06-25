@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"os/exec"
 	. "spotitunes/api"
 	. "spotitunes/style"
 
@@ -31,6 +32,7 @@ type Model struct {
 	Choices   []string
 	Table     table.Model
 	Message   string
+	Chosen    string
 	TextInput textinput.Model
 	State     ScreenState
 }
@@ -60,10 +62,12 @@ func (m Model) updateMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 			switch m.Cursor {
 			case 0:
 				m.State = Input
+				m.Chosen = "AM"
 				m.Message = "Enter Apple Music link:"
 				return m, textinput.Blink
 			case 1:
 				m.State = Input
+				m.Chosen = "Spotify"
 				m.Message = "Enter Spotify link:"
 				return m, textinput.Blink
 			case 2:
@@ -97,26 +101,49 @@ func (m Model) updateInput(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) updateResult(msg tea.Msg) (tea.Model, tea.Cmd) {
+	var length = 5
 	switch msg := msg.(type) {
 	case SpotifyResult:
-		rows := make([]table.Row, 0, len(msg.Tracks.Items))
+		rows := make([]table.Row, 0, length)
 		for _, result := range msg.Tracks.Items {
 			rows = append(rows, table.Row{result.Name, result.Artists[0].Name, result.ExternalURLs.Spotify})
 		}
 		m.Table.SetRows(rows)
 		return m, nil
 	case ItunesResponse:
-		rows := make([]table.Row, 0, len(msg.Results))
+		rows := make([]table.Row, 0, length)
 		for _, result := range msg.Results {
 			rows = append(rows, table.Row{result.TrackName, result.ArtistName, result.TrackViewURL})
-			m.Table.SetRows(rows)
 		}
+
+		m.Table.SetRows(rows)
+
 		return m, nil
 
 	case ErrMsg:
 		m.Message = fmt.Sprintf("Error: %v", msg)
 		return m, nil
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "down", "j":
+			if m.Cursor != length-1 {
+				m.Cursor++
+			}
+
+		case "up", "k":
+			if m.Cursor != 0 {
+				m.Cursor--
+			}
+		case "q", "ctrl+c":
+			return m, tea.Quit
+		case "enter":
+			link := m.Table.Rows()[m.Cursor][2]
+			openLink(link)
+		}
+
+		m.Table.SetCursor(m.Cursor)
 	}
+
 	return m, nil
 }
 
@@ -168,31 +195,16 @@ func (m Model) View() string {
 		s += "\n\n" + HintStyle.Render("Press Enter to submit.")
 		return ContainerStyle.Render(s)
 	case result:
-		return m.Table.View() + "\n"
+		s := m.Table.View()
+
+		s += "\n\n" + HintStyle.Render("Use ↑/↓ to navigate, ⏎ to open, q to quit (your career)")
+
+		return s
+
 	}
 
 	return ContainerStyle.Render("Unknown state")
 }
-
-// iTunes API (disabled for now)
-// func FetchTracks(query string) tea.Cmd {
-// 	return func() tea.Msg {
-// 		res, err := request(query)
-// 		if err != nil {
-// 			panic(err)
-// 		}
-// 		defer res.Body.Close()
-// 		body, err := io.ReadAll(res.Body)
-
-// 		var ApiResp APIResponse
-// 		err = json.Unmarshal(body, &ApiResp)
-// 		if err != nil {
-// 			println("Error")
-// 			os.Exit(1)
-// 		}
-// 		return SearchresultMsg(ApiResp)
-// 	}
-// }
 
 func FetchSpotify(query string) tea.Cmd {
 	return func() tea.Msg {
@@ -240,4 +252,8 @@ func FetchItunes(query string) tea.Cmd {
 		}
 		return result
 	}
+}
+
+func openLink(url string) {
+	exec.Command("open", url).Start()
 }
